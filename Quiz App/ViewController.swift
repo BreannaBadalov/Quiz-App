@@ -10,6 +10,73 @@ import UIKit
 
 class ViewController: UIViewController {
 
+    @IBOutlet weak var questionLabel: UILabel!
+    
+    @IBOutlet weak var answer0: UIButton!
+    
+    @IBOutlet weak var answer1: UIButton!
+    
+    @IBOutlet weak var answer2: UIButton!
+    
+    @IBOutlet weak var answer3: UIButton!
+    
+    @IBAction func handleSubmitAnswer0(_ sender: Any) {
+    }
+    
+    @IBAction func handleSubmitAnswer1(_ sender: Any) {
+    }
+    
+    @IBAction func handleSubmitAnswer2(_ sender: Any) {
+    }
+    
+    @IBAction func handleSubmitAnswer3(_ sender: Any) {
+    }
+    
+    func setQuestion() {
+      questionLabel.text = currentQuestion!.question
+      answer0.setTitle(currentQuestion!.answers[0], for: .normal)
+      answer1.setTitle(currentQuestion!.answers[1], for: .normal)
+      answer2.setTitle(currentQuestion!.answers[2], for: .normal)
+      answer3.setTitle(currentQuestion!.answers[3], for: .normal)
+      progressLabel.text = "Question \(currentQuestionPosition + 1) of \(questions.count)"
+    }
+    func loadNextQuestion() {
+((currentQuestionPosition + 1) == questions.count)
+        performSegue(withIdentifier: "sgShowResults", sender: nil)
+        currentQuestionPosition += 1
+        currentQuestion = questions[currentQuestionPosition]
+        setQuestion()
+    }
+//    var checkAnswer: int = choiceNo
+    var choiceNo: Int = 0
+    func  checkAnswer(parameter: choiceNo){
+choiceNo = currentQuestion!.correctAnswer
+         noCorrect += 1
+        loadNextQuestion()
+    }
+    @IBOutlet weak var progressLabel: UILabel!
+    struct Question {
+         let question: String
+         let answers: [String]
+         let correctAnswer: Int
+    }
+    var questions: [Question] = [
+            Question(
+                question: "How many planets are in the Solar System?",
+                answers: ["7", "6", "8", "9"],
+                correctAnswer: 3),
+            Question(
+                question: "Which planet is the coldest?",
+                answers: ["Saturn", "Uranus", "Neptune", "Jupiter"],
+                correctAnswer: 2),
+                    Question(
+                        question: "On which two planets does it rain diamonds?",
+                        answers: ["Neptune and Uranus", "Saturn and Uranus", "Jupiter and Neptune", "Saturn and Jupiter"],
+                        correctAnswer: 1)
+    ]
+    var currentQuestion: Question?
+    var currentQuestionPosition: Int = 0
+    var noCorrect: Int = 0
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
