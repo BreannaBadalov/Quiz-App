@@ -9,13 +9,14 @@
 import UIKit
 
 class ResultsViewController: UIViewController {
-
+    var noCorrect = 0
+    var total = 0
     @IBOutlet weak var resultsMessageLabel: UILabel!
     
     @IBOutlet weak var scoreLabel: UILabel!
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        resultsMessageLabel.text = "You got \(noCorrect) out of \(total)"
         // Do any additional setup after loading the view.
     }
     

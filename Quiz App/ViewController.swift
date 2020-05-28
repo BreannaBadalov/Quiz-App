@@ -21,15 +21,21 @@ class ViewController: UIViewController {
     @IBOutlet weak var answer3: UIButton!
     
     @IBAction func handleSubmitAnswer0(_ sender: Any) {
+
+     checkAnswer(choiceNo:0)
+
     }
     
     @IBAction func handleSubmitAnswer1(_ sender: Any) {
+       checkAnswer(choiceNo:1)
     }
     
     @IBAction func handleSubmitAnswer2(_ sender: Any) {
+        checkAnswer(choiceNo:2)
     }
     
     @IBAction func handleSubmitAnswer3(_ sender: Any) {
+      checkAnswer(choiceNo:3)
     }
     
     func setQuestion() {
@@ -53,7 +59,16 @@ class ViewController: UIViewController {
 choiceNo = currentQuestion!.correctAnswer
          noCorrect += 1
         loadNextQuestion()
+        override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+          if(segue.identifier == "sgShowResults") {
+            let vc = segue.destination as! ResultsViewController
+            vc.noCorrect = noCorrect
+            vc.total = questions.count
+          }
+        }
+
     }
+    
     @IBOutlet weak var progressLabel: UILabel!
     struct Question {
          let question: String
@@ -80,7 +95,11 @@ choiceNo = currentQuestion!.correctAnswer
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
-    }
+          // Setup the question and reset currentQuestion
+            currentQuestion = questions[0]
+            setQuestion()
+        }
+//    }
 
 
 }
