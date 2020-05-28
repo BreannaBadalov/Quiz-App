@@ -59,7 +59,7 @@ class ViewController: UIViewController {
 choiceNo = currentQuestion!.correctAnswer
          noCorrect += 1
         loadNextQuestion()
-        override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+       override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
           if(segue.identifier == "sgShowResults") {
             let vc = segue.destination as! ResultsViewController
             vc.noCorrect = noCorrect
