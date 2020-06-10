@@ -9,7 +9,7 @@
 import UIKit
 
 class ViewController: UIViewController {
-
+    
     @IBOutlet weak var questionLabel: UILabel!
     
     @IBOutlet weak var answer0: UIButton!
@@ -21,13 +21,13 @@ class ViewController: UIViewController {
     @IBOutlet weak var answer3: UIButton!
     
     @IBAction func handleSubmitAnswer0(_ sender: Any) {
-
-     checkAnswer(choiceNo:0)
-
+        
+        checkAnswer(choiceNo:0)
+        
     }
     
     @IBAction func handleSubmitAnswer1(_ sender: Any) {
-       checkAnswer(choiceNo:1)
+        checkAnswer(choiceNo:1)
     }
     
     @IBAction func handleSubmitAnswer2(_ sender: Any) {
@@ -35,59 +35,61 @@ class ViewController: UIViewController {
     }
     
     @IBAction func handleSubmitAnswer3(_ sender: Any) {
-      checkAnswer(choiceNo:3)
+        checkAnswer(choiceNo:3)
     }
     
     func setQuestion() {
-      questionLabel.text = currentQuestion!.question
-      answer0.setTitle(currentQuestion!.answers[0], for: .normal)
-      answer1.setTitle(currentQuestion!.answers[1], for: .normal)
-      answer2.setTitle(currentQuestion!.answers[2], for: .normal)
-      answer3.setTitle(currentQuestion!.answers[3], for: .normal)
-      progressLabel.text = "Question \(currentQuestionPosition + 1) of \(questions.count)"
+        questionLabel.text = currentQuestion!.question
+        answer0.setTitle(currentQuestion!.answers[0], for: .normal)
+        answer1.setTitle(currentQuestion!.answers[1], for: .normal)
+        answer2.setTitle(currentQuestion!.answers[2], for: .normal)
+        answer3.setTitle(currentQuestion!.answers[3], for: .normal)
+        progressLabel.text = "Question \(currentQuestionPosition + 1) of \(questions.count)"
     }
     func loadNextQuestion() {
-((currentQuestionPosition + 1) == questions.count)
-        performSegue(withIdentifier: "sgShowResults", sender: nil)
-        currentQuestionPosition += 1
-        currentQuestion = questions[currentQuestionPosition]
-        setQuestion()
+        if ((currentQuestionPosition + 1) == questions.count){
+            performSegue(withIdentifier: "sgShowResults", sender: nil)}
+        else {  currentQuestionPosition += 1
+            currentQuestion = questions[currentQuestionPosition]
+            setQuestion() }
     }
-//    var checkAnswer: int = choiceNo
-    var choiceNo: Int = 0
-    func  checkAnswer(parameter: choiceNo){
-choiceNo = currentQuestion!.correctAnswer
-         noCorrect += 1
+    //    var checkAnswer: int = choiceNo
+    // var choiceNo: Int = 0
+    func  checkAnswer(choiceNo: Int){
+        if (choiceNo == currentQuestion!.correctAnswer){
+            noCorrect += 1 }
         loadNextQuestion()
-       override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-          if(segue.identifier == "sgShowResults") {
-            let vc = segue.destination as! ResultsViewController
-            vc.noCorrect = noCorrect
-            vc.total = questions.count
-          }
         }
-
+        // }
+        // }
+        override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+            if(segue.identifier == "sgShowResults") {
+                let vc = segue.destination as! ResultsViewController
+                vc.noCorrect = noCorrect
+                vc.total = questions.count
+            }
+    
     }
     
     @IBOutlet weak var progressLabel: UILabel!
     struct Question {
-         let question: String
-         let answers: [String]
-         let correctAnswer: Int
+        let question: String
+        let answers: [String]
+        let correctAnswer: Int
     }
     var questions: [Question] = [
-            Question(
-                question: "How many planets are in the Solar System?",
-                answers: ["7", "6", "8", "9"],
-                correctAnswer: 3),
-            Question(
-                question: "Which planet is the coldest?",
-                answers: ["Saturn", "Uranus", "Neptune", "Jupiter"],
-                correctAnswer: 2),
-                    Question(
-                        question: "On which two planets does it rain diamonds?",
-                        answers: ["Neptune and Uranus", "Saturn and Uranus", "Jupiter and Neptune", "Saturn and Jupiter"],
-                        correctAnswer: 1)
+        Question(
+            question: "How many planets are in the Solar System?",
+            answers: ["7", "6", "9", "8"],
+            correctAnswer: 3),
+        Question(
+            question: "Which planet is the coldest?",
+            answers: ["Saturn", "Neptune", "Uranus", "Jupiter"],
+            correctAnswer: 2),
+        Question(
+            question: "On which two planets does it rain diamonds?",
+            answers: ["Saturn and Uranus", "Neptune and Uranus", "Jupiter and Neptune", "Saturn and Jupiter"],
+            correctAnswer: 1)
     ]
     var currentQuestion: Question?
     var currentQuestionPosition: Int = 0
@@ -95,12 +97,12 @@ choiceNo = currentQuestion!.correctAnswer
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
-          // Setup the question and reset currentQuestion
-            currentQuestion = questions[0]
-            setQuestion()
-        }
-//    }
-
-
+        // Setup the question and reset currentQuestion
+        currentQuestion = questions[0]
+        setQuestion()
+    }
+    //    }
+    
+    
 }
 
